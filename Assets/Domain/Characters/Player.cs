@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.U2D;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class FPSController : MonoBehaviour
+public class FPSController : MonoBehaviour, ISprinting
 {
 
     // TODO: Move these to game settings file
@@ -17,6 +18,13 @@ public class FPSController : MonoBehaviour
     private float xRotation = 0f;
     private float speed = 3f;
     private float cameraStandingHeight;
+
+    // TODO: Will want to split this out into PlayerStamina once we add monsters
+    private float staminaRegenRate = 5f;
+    private float maxStamina = 100f;
+    private float currentStamina = 100f;
+    private bool staminaIsRegenerating = false;
+    private Coroutine staminaRegenCoroutine;
 
     // Start is called before the first frame update
     void Start()
@@ -32,36 +40,40 @@ public class FPSController : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(currentStamina);
+
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
         Vector3 movement = transform.right * x + transform.forward * z;
-        Vector3 move = new Vector3(getPlayerSpeed() * movement.x, -2f, getPlayerSpeed() * movement.z);
+        Vector3 move = new Vector3(currentSpeed() * movement.x, -2f, currentSpeed() * movement.z);
         controller.Move(move * Time.deltaTime);
 
         HandleMouseLook();
         HandleFOVIfSprinting();
         HandleCrouch();
+
+        // TODO: Will want to split this out into PlayerStamina once we add monsters
+        HandleStaminaDrainFromSprinting();
     }
 
-    bool isSprinting()
+    public bool isSprinting()
     {
-        // TODO: This will get more complex to add stamina later
+        return Input.GetButton("Sprint") && currentStamina > 0f;
+    }
+
+    bool isCrouching()
+    {
         return Input.GetButton("Sprint");
     }
 
-    bool isCouching()
-    {
-        return Input.GetButton("Sprint");
-    }
-
-    float getPlayerSpeed()
+    public float currentSpeed()
     {
         if (isSprinting()) {
             return speed * 2f;
         }
         
-        if (isCouching()) {
+        if (isCrouching()) {
             return speed * 0.5f;
         }
 
@@ -99,5 +111,48 @@ public class FPSController : MonoBehaviour
     void HandleFOVIfSprinting()
     {
         playerCamera.fieldOfView = isSprinting() ? defaultCameraFOV * 1.1f : defaultCameraFOV;
+    }
+
+    void HandleStaminaDrainFromSprinting()
+    {
+        if (isSprinting())
+        {
+            // Cancel stamina regeneration if the player starts sprinting again
+            if (staminaRegenCoroutine != null)
+            {
+                StopCoroutine(staminaRegenCoroutine);
+                staminaRegenCoroutine = null;
+                staminaIsRegenerating = false;
+            }
+
+            // Drain stamina at a rate of 10 units per second
+            currentStamina = Mathf.Clamp(currentStamina - (10f * Time.deltaTime), 0, maxStamina);
+        }
+        // Regenerate stamina when not sprinting and not at max stamina
+        else if (!Input.GetButton("Sprint") && currentStamina < maxStamina)
+        {
+            // Start the regeneration delay if it's not already in progress
+            if (!staminaIsRegenerating && staminaRegenCoroutine == null)
+            {
+                staminaRegenCoroutine = StartCoroutine(StaminaRegenDelay());
+            }
+        }
+    }
+
+    private IEnumerator StaminaRegenDelay()
+    {
+        yield return new WaitForSeconds(4f); // Delay before stamina starts regenerating
+        staminaIsRegenerating = true; // Allow regeneration to begin
+
+        // Start regenerating stamina continuously after the delay
+        while (currentStamina < maxStamina)
+        {
+            currentStamina = Mathf.Clamp(currentStamina + staminaRegenRate * Time.deltaTime, 0, maxStamina);
+            yield return null;
+        }
+
+        // Stop regeneration once stamina is full
+        staminaRegenCoroutine = null;
+        staminaIsRegenerating = false;
     }
 }
