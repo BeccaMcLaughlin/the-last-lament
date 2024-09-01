@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: Herb
   ItemIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  ItemSpawnObject: {fileID: 0}
+  ItemSpawnObject: {fileID: 2160636120139525712, guid: 4b6c58c7847d684478d7e49e72941486, type: 3}
   AudioWhenUsed: {fileID: 0}

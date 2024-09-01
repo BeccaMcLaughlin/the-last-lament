@@ -6,12 +6,21 @@ public class InventoryItem : MonoBehaviour
     private Image panel;
     private Image itemImage;
     private ScriptedItem item;
+    private FPSController player;
     public bool IsOccupied => item != null;
 
-    private void Start()
+    void Start()
     {
         panel = GetComponent<Image>();
         itemImage = transform.Find("Image").GetComponentInChildren<Image>();
+    }
+
+    void Update()
+    {
+        if (Input.GetButton("Drop Item"))
+        {
+            DropItem();
+        }
     }
 
     public void SetPanel(bool isHighlighted)
@@ -27,5 +36,23 @@ public class InventoryItem : MonoBehaviour
         item = newItem;
         itemImage.sprite = newItem.ItemIcon;
         itemImage.enabled = true; // Enable the icon image
+    }
+
+    private void ClearItem()
+    {
+        item = null;
+        itemImage.sprite = null; // Clear the child image
+        itemImage.enabled = false; // Hide the item image
+    }
+
+    public void DropItem()
+    {
+        if (IsOccupied)
+        {
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<FPSController>();
+            Vector3 dropPosition = player.transform.position + player.transform.forward;
+            Instantiate(item.ItemSpawnObject, dropPosition, player.transform.rotation);
+            ClearItem();
+        }
     }
 }
