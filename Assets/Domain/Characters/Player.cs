@@ -26,10 +26,6 @@ public class FPSController : MonoBehaviour, ISprinting
     private bool staminaIsRegenerating = false;
     private Coroutine staminaRegenCoroutine;
 
-    // TODO: Maybe find neater way
-    public bool isDragging { get; set; } = false;
-
-    // Start is called before the first frame update
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -72,7 +68,7 @@ public class FPSController : MonoBehaviour, ISprinting
     {
         float currentSpeed = speed;
 
-        if (isDragging)
+        if (GameState.PlayerIsDraggingCorpse)
         {
             currentSpeed = speed / 0.5f;
         }

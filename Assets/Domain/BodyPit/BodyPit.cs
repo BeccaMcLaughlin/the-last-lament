@@ -10,7 +10,6 @@ public class BodyPit : MonoBehaviour, IInteractable
     public void Interact()
     {
         // Spawn the corpse at the specified spawn point
-
         if (!GameState.hasActiveCorpse)
         {
             Instantiate(corpsePrefab, spawnPoint.position, corpsePrefab.transform.rotation);
