@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Corpse
+  - Inventory
   layers:
   - Default
   - TransparentFX
