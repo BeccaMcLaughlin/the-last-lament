@@ -1,12 +1,14 @@
 using System;
+using UnityEngine;
 
 public static class GameState
 {
     private static int _processedCorpses;
 
-    public static bool hasActiveCorpse = false;
+    public static bool HasActiveCorpse = false;
     public static bool PlayerIsDraggingCorpse = false;
-    public static bool HasCompletedActiveRitual = false;
+    public static bool HasCorpseOnTable = false;
+    public static GameObject CorpseToPutInsideAlcove = null;
 
     public static event Action OnProcessedCorpsesChanged;
 
