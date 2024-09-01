@@ -22,11 +22,18 @@ public class Inventory : MonoBehaviour
         // Detect pressing q to drop an item
     }
 
-    public void PickupItem()
+    public bool PickupItem(ScriptedItem item)
     {
         // Add current pick up item at the positon in the inventory if it's empty
+        InventoryItem selectedInventoryItem = inventoryItems[GameState.SelectedInventoryPanel];
+        if (!selectedInventoryItem.IsOccupied)
+        {
+            selectedInventoryItem.AssignItem(item);
+            Debug.Log($"Picked up {item.ItemName} and placed it in slot {GameState.SelectedInventoryPanel}");
+            return true;
+        }
 
-        // Then destroy it from the game world because it should be stored in a new instance of InventoryItem
+        return false;
     }
 
     private void HandleScrollInput()

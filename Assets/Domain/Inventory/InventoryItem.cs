@@ -4,11 +4,14 @@ using UnityEngine.UI;
 public class InventoryItem : MonoBehaviour
 {
     private Image panel;
+    private Image itemImage;
     private ScriptedItem item;
+    public bool IsOccupied => item != null;
 
     private void Start()
     {
         panel = GetComponent<Image>();
+        itemImage = transform.Find("Image").GetComponentInChildren<Image>();
     }
 
     public void SetPanel(bool isHighlighted)
@@ -18,8 +21,11 @@ public class InventoryItem : MonoBehaviour
         panel.color = panelColor;
     }
 
+    // Assign an item to this inventory slot
     public void AssignItem(ScriptedItem newItem)
     {
-        // Nothing here yet
+        item = newItem;
+        itemImage.sprite = newItem.ItemIcon;
+        itemImage.enabled = true; // Enable the icon image
     }
 }
