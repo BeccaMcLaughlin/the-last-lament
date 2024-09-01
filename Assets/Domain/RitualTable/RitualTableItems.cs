@@ -6,6 +6,7 @@ using static UnityEditor.Progress;
 public class RitualTableItems : MonoBehaviour
 {
     public List<ScriptedItem> itemPool = new List<ScriptedItem>();
+    public List<Transform> ritualItemSpawnPoints = new List<Transform>();
 
     private List<Pickup> pickups = new List<Pickup>();
     private int maximumItemsOnTable = 6;
@@ -44,6 +45,8 @@ public class RitualTableItems : MonoBehaviour
                 break;
             }
         }
+
+        SpawnMatchingRitualItems();
     }
 
     private void SpawnItem(ScriptedItem item)
@@ -72,8 +75,11 @@ public class RitualTableItems : MonoBehaviour
         Destroy(spawnContainer);
     }
 
-    public void ClearPickups()
+    private void SpawnMatchingRitualItems()
     {
-
+        for (int i = 0; i < itemPool.Count; i++)
+        {
+            GameObject spawnedItem = Instantiate(pickups[i].item.MatchingRitualObject, ritualItemSpawnPoints[i].position, ritualItemSpawnPoints[i].rotation);
+        }
     }
 }

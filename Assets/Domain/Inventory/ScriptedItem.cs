@@ -7,6 +7,7 @@ public class ScriptedItem : ScriptableObject
     public string ItemName = "New Item";
     public Sprite ItemIcon = null;
     public Rigidbody ItemSpawnObject = null;
+    public GameObject MatchingRitualObject = null;
     public float PointCost = 1;
     public AudioClip AudioWhenUsed = null;
     public GameObject AvailableSpawnPoints = null;
