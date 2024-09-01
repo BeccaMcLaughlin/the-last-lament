@@ -19,6 +19,9 @@ public class BodyPit : MonoBehaviour, IInteractable
 
             // TODO: Move this to when the ritual is complete and the body is in the alcove
             GameState.ProcessedCorpses += 1;
+
+            // Increase the corruption meter randomly
+            GameState.Corruption += UnityEngine.Random.Range(0, 2);
         }
     }
 
