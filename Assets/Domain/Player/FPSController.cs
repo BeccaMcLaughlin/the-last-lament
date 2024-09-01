@@ -87,12 +87,12 @@ public class FPSController : MonoBehaviour
         // Constrain the updates here to a single frame
         if (Input.GetButtonDown("Crouch"))
         {
-            playerCamera.transform.localPosition.y = new Vector3(playerCamera.transform.localPosition.x, cameraStandingHeight - 0.5f, playerCamera.transform.localPosition.z);
+            playerCamera.transform.localPosition = new Vector3(playerCamera.transform.localPosition.x, cameraStandingHeight - 0.5f, playerCamera.transform.localPosition.z);
         }
         // Check if the crouch button is released
         else if (Input.GetButtonUp("Crouch"))
         {
-            playerCamera.transform.localPosition.y = new Vector3(playerCamera.transform.localPosition.x, cameraStandingHeight, playerCamera.transform.localPosition.z);
+            playerCamera.transform.localPosition = new Vector3(playerCamera.transform.localPosition.x, cameraStandingHeight, playerCamera.transform.localPosition.z);
         }
     }
 
