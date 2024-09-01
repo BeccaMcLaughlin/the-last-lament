@@ -10,10 +10,10 @@ public class BodyPit : MonoBehaviour, IInteractable
     public void Interact()
     {
         // Spawn the corpse at the specified spawn point
-        if (!GameState.hasActiveCorpse)
+        if (!GameState.HasActiveCorpse)
         {
             Instantiate(corpsePrefab, spawnPoint.position, corpsePrefab.transform.rotation);
-            GameState.hasActiveCorpse = true;
+            GameState.HasActiveCorpse = true;
             Debug.Log("A corpse has been retrieved from the pile.");
 
             // TODO: Move this to when the ritual is complete and the body is in the alcove
@@ -32,6 +32,6 @@ public class BodyPit : MonoBehaviour, IInteractable
             return "No more corpses to process today";
         }
 
-        return GameState.hasActiveCorpse ? "You must complete the current ritual before taking a fresh corpse from the pile" : "Take corpse from pile";
+        return GameState.HasActiveCorpse ? "You must complete the current ritual before taking a fresh corpse from the pile" : "Take corpse from pile";
     }
 }
