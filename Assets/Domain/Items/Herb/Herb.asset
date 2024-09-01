@@ -15,6 +15,7 @@ MonoBehaviour:
   ItemName: Herb
   ItemIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   ItemSpawnObject: {fileID: 2160636120139525712, guid: 4b6c58c7847d684478d7e49e72941486, type: 3}
+  MatchingRitualObject: {fileID: -3269516403947881372, guid: dfdc81f273c145c46aa1c4e80b30c59f, type: 3}
   PointCost: 1
   AudioWhenUsed: {fileID: 0}
   AvailableSpawnPoints: {fileID: 616550042932091049, guid: bf112a98a70cd9c4c8ca390ed3514563, type: 3}

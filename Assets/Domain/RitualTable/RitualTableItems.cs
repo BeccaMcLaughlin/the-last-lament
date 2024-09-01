@@ -8,7 +8,7 @@ public class RitualTableItems : MonoBehaviour
     public List<ScriptedItem> itemPool = new List<ScriptedItem>();
     public List<Transform> ritualItemSpawnPoints = new List<Transform>();
 
-    private List<Pickup> pickups = new List<Pickup>();
+    private List<ScriptedItem> currentItemPool = new List<ScriptedItem>();
     private int maximumItemsOnTable = 6;
 
     public void SelectItemsBasedOnCorruption()
@@ -25,7 +25,7 @@ public class RitualTableItems : MonoBehaviour
             return;
         }
 
-        while (availableCorruption > 0 && pickups.Count < maximumItemsOnTable)
+        while (availableCorruption > 0 && currentItemPool.Count < maximumItemsOnTable)
         {
             attemptsToSelectItem += 1;
             ScriptedItem selectedItem = affordableItems[Random.Range(0, affordableItems.Count - 1)];
@@ -35,12 +35,11 @@ public class RitualTableItems : MonoBehaviour
                 continue;
             }
 
-            itemPool.Add(selectedItem);
+            currentItemPool.Add(selectedItem);
             SpawnItem(selectedItem);
             availableCorruption -= selectedItem.PointCost;
-            Debug.Log(selectedItem.ItemName);
 
-            if (itemPool.Count >= 6 || attemptsToSelectItem > 20)
+            if (currentItemPool.Count >= maximumItemsOnTable || attemptsToSelectItem > 20)
             {
                 break;
             }
@@ -77,9 +76,11 @@ public class RitualTableItems : MonoBehaviour
 
     private void SpawnMatchingRitualItems()
     {
-        for (int i = 0; i < itemPool.Count; i++)
+        for (int i = 0; i < currentItemPool.Count; i++)
         {
-            GameObject spawnedItem = Instantiate(pickups[i].item.MatchingRitualObject, ritualItemSpawnPoints[i].position, ritualItemSpawnPoints[i].rotation);
+            Debug.Log("Instantiate ritual item");
+            Debug.Log(currentItemPool[i].ItemName);
+            GameObject spawnedItem = Instantiate(currentItemPool[i].MatchingRitualObject.gameObject, ritualItemSpawnPoints[i].position, ritualItemSpawnPoints[i].rotation);
         }
     }
 }

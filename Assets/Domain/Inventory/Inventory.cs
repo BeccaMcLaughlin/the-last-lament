@@ -20,6 +20,10 @@ public class Inventory : MonoBehaviour
         HandleScrollInput();
 
         // Detect pressing q to drop an item
+        if (Input.GetButton("Drop Item"))
+        {
+            DropItem();
+        }
     }
 
     public bool PickupItem(ScriptedItem item)
@@ -54,5 +58,10 @@ public class Inventory : MonoBehaviour
         {
             inventoryItems[i].SetPanel(i == GameState.SelectedInventoryPanel);
         }
+    }
+
+    private void DropItem()
+    {
+        inventoryItems[GameState.SelectedInventoryPanel].DropItem();
     }
 }
