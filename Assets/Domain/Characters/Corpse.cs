@@ -23,7 +23,12 @@ public class Corpse : MonoBehaviour, IInteractable
     // Implement the GetHoverText method to show interaction message
     public string GetHoverText()
     {
-        return "Drag corpse";
+        if (!rb.isKinematic)
+        {
+            return "Drag corpse";
+        }
+
+        return "";
     }
 
     private void StartDrag()
@@ -31,7 +36,7 @@ public class Corpse : MonoBehaviour, IInteractable
         if (!isBeingDragged)
         {
             isBeingDragged = true;
-            playerController.isDragging = true; // Set dragging state on the player
+            GameState.PlayerIsDraggingCorpse = true; // Set dragging state
             Debug.Log("Dragging started");
         }
     }
@@ -39,7 +44,7 @@ public class Corpse : MonoBehaviour, IInteractable
     private void StopDrag()
     {
         isBeingDragged = false;
-        playerController.isDragging = false; // Reset dragging state on the player
+        GameState.PlayerIsDraggingCorpse = false; // Set dragging state
         Debug.Log("Dragging stopped");
     }
 
