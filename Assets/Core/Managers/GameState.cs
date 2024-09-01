@@ -24,7 +24,7 @@ public static class GameState
 
     public static int TotalCorpses = 10;
 
-    public static int Corruption = 1;
+    public static float Corruption = 1f;
 
     public static int SelectedInventoryPanel = 0;
 }

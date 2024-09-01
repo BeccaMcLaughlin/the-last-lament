@@ -5,8 +5,12 @@ public class RitualTable : MonoBehaviour, IInteractable
 {
     public Transform spawnPoint; // The point on the table where the corpse should be placed
     private Collider detectedCorpse;
+    private RitualTableItems ritualTableItems = null;
 
-    private bool HasCorpseOnTable = false;
+    private void Start()
+    {
+        ritualTableItems = GetComponent<RitualTableItems>();
+    }
 
     private void Update()
     {
@@ -53,6 +57,12 @@ public class RitualTable : MonoBehaviour, IInteractable
             Debug.Log("Corpse placed on the table.");
             GameState.HasCorpseOnTable = true;
             GameState.CorpseToPutInsideAlcove = null;
+
+            // Begin the game of spawning items to find
+            if (ritualTableItems != null)
+            {
+                ritualTableItems.SelectItemsBasedOnCorruption();
+            }
 
             // Disable corpse physics
             // TODO: Is this the right place for this logic?

@@ -130,6 +130,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2160636120139525712, guid: 4b6c58c7847d684478d7e49e72941486, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4844867823487166441, guid: 4b6c58c7847d684478d7e49e72941486, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.4285097
@@ -432,6 +436,7 @@ GameObject:
   - component: {fileID: 396172238}
   - component: {fileID: 396172237}
   - component: {fileID: 396172241}
+  - component: {fileID: 396172242}
   m_Layer: 0
   m_Name: Ritual Table
   m_TagString: Untagged
@@ -539,6 +544,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 1736493520}
+--- !u!114 &396172242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396172236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79dea3a223396ac488adee006724724d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemPool:
+  - {fileID: 11400000, guid: 42b29815ee8256541a62dc695f4c87d3, type: 2}
 --- !u!1 &468334738
 GameObject:
   m_ObjectHideFlags: 0
