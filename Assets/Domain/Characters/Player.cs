@@ -26,6 +26,9 @@ public class FPSController : MonoBehaviour, ISprinting
     private bool staminaIsRegenerating = false;
     private Coroutine staminaRegenCoroutine;
 
+    // TODO: Maybe find neater way
+    public bool isDragging { get; set; } = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,8 +43,6 @@ public class FPSController : MonoBehaviour, ISprinting
 
     void Update()
     {
-        Debug.Log(currentStamina);
-
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
@@ -69,15 +70,22 @@ public class FPSController : MonoBehaviour, ISprinting
 
     public float currentSpeed()
     {
+        float currentSpeed = speed;
+
+        if (isDragging)
+        {
+            currentSpeed = speed / 0.5f;
+        }
+
         if (isSprinting()) {
-            return speed * 2f;
+            return currentSpeed * 2f;
         }
         
         if (isCrouching()) {
-            return speed * 0.5f;
+            return currentSpeed * 0.5f;
         }
 
-        return speed;
+        return currentSpeed;
     }
 
     void HandleMouseLook()
