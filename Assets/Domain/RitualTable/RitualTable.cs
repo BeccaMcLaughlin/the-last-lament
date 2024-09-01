@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class RitualTable : MonoBehaviour, IInteractable
@@ -28,10 +29,14 @@ public class RitualTable : MonoBehaviour, IInteractable
 
     public string GetHoverText()
     {
-        if (!HasCorpseOnTable)
+        if (GameState.HasCompletedActiveRitual)
+        {
+            return "Lay the corpse in an alcove before performing another cleansing";
+        } else if (!HasCorpseOnTable)
         {
             return detectedCorpse ? "Put corpse on the table" : "No corpse nearby to place on the table";
-        } else
+        }
+        else
         {
             return "Find items to complete the cleansing";
         }
@@ -47,10 +52,23 @@ public class RitualTable : MonoBehaviour, IInteractable
             GameState.PlayerIsDraggingCorpse = false; // Update game state to indicate the player is no longer dragging
             Debug.Log("Corpse placed on the table.");
             HasCorpseOnTable = true;
+            GameState.HasCompletedActiveRitual = false;
 
             // Disable corpse physics
             // TODO: Is this the right place for this logic?
             detectedCorpse.attachedRigidbody.isKinematic = true;
+
+            // TODO: Move this from a timer over to actual logic when all items are done
+            StartCoroutine(CanRemoveCorpse());
         }
+    }
+
+    private IEnumerator CanRemoveCorpse()
+    {
+        yield return new WaitForSeconds(4f); // In reality this would be the individual items all collected for the ritual
+
+        HasCorpseOnTable = false;
+        GameState.HasCompletedActiveRitual = true;
+        detectedCorpse.attachedRigidbody.isKinematic = false;
     }
 }

@@ -6,6 +6,7 @@ public static class GameState
 
     public static bool hasActiveCorpse = false;
     public static bool PlayerIsDraggingCorpse = false;
+    public static bool HasCompletedActiveRitual = false;
 
     public static event Action OnProcessedCorpsesChanged;
 
