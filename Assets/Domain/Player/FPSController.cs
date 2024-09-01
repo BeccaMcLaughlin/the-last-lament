@@ -16,14 +16,18 @@ public class FPSController : MonoBehaviour
     private Vector3 velocity;
     private float xRotation = 0f;
     private float speed = 3f;
+    private float cameraStandingHeight;
 
     // Start is called before the first frame update
     void Start()
     {
         controller = GetComponent<CharacterController>();
         playerCamera = GetComponentInChildren<Camera>();
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        cameraStandingHeight = playerCamera.transform.localPosition.y;
     }
 
     void Update()
@@ -37,6 +41,7 @@ public class FPSController : MonoBehaviour
 
         HandleMouseLook();
         HandleFOVIfSprinting();
+        HandleCrouch();
     }
 
     bool isSprinting()
@@ -45,9 +50,22 @@ public class FPSController : MonoBehaviour
         return Input.GetButton("Sprint");
     }
 
+    bool isCouching()
+    {
+        return Input.GetButton("Sprint");
+    }
+
     float getPlayerSpeed()
     {
-        return isSprinting() ? speed * 2f : speed;
+        if (isSprinting()) {
+            return speed * 2f;
+        }
+        
+        if (isCouching()) {
+            return speed * 0.5f;
+        }
+
+        return speed;
     }
 
     void HandleMouseLook()
@@ -62,6 +80,20 @@ public class FPSController : MonoBehaviour
 
         // Apply the rotation to the entire player object, including the camera
         transform.localRotation = Quaternion.Euler(xRotation, transform.localEulerAngles.y + mouseX, 0f);
+    }
+
+    void HandleCrouch()
+    {
+        // Constrain the updates here to a single frame
+        if (Input.GetButtonDown("Crouch"))
+        {
+            playerCamera.transform.localPosition.y = new Vector3(playerCamera.transform.localPosition.x, cameraStandingHeight - 0.5f, playerCamera.transform.localPosition.z);
+        }
+        // Check if the crouch button is released
+        else if (Input.GetButtonUp("Crouch"))
+        {
+            playerCamera.transform.localPosition.y = new Vector3(playerCamera.transform.localPosition.x, cameraStandingHeight, playerCamera.transform.localPosition.z);
+        }
     }
 
     void HandleFOVIfSprinting()
