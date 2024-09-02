@@ -834,6 +834,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maximumSanity: 100
+  minimumSanity: 0
   sanityModifier: 0
   currentSanity: 100
 --- !u!114 &572170240
@@ -2838,6 +2839,7 @@ GameObject:
   - component: {fileID: 2145335263}
   - component: {fileID: 2145335265}
   - component: {fileID: 2145335264}
+  - component: {fileID: 2145335268}
   - component: {fileID: 2145335266}
   - component: {fileID: 2145335267}
   m_Layer: 0
@@ -3000,6 +3002,18 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &2145335268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2145335262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45cec706c695ed742a25b36867420116, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6991488229302946359
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -24,8 +24,8 @@ MonoBehaviour:
     overrideState: 1
     value: 0
   fastMode:
-    overrideState: 1
-    value: 1
+    overrideState: 0
+    value: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,19 +59,19 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 1
+    value: 0
   intensityX:
-    overrideState: 1
-    value: 1
+    overrideState: 0
+    value: 0
   intensityY:
-    overrideState: 1
-    value: 1
+    overrideState: 0
+    value: 0
   centerX:
-    overrideState: 0
-    value: -0.111
+    overrideState: 1
+    value: 0
   centerY:
-    overrideState: 0
-    value: 0.336
+    overrideState: 1
+    value: 0
   scale:
     overrideState: 1
     value: 1

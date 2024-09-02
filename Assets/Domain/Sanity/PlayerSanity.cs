@@ -5,16 +5,10 @@ public class PlayerSanity : MonoBehaviour
 {
     private SanityReceiver sanityReceiver;
     private Camera playerCamera;
-    private PostProcessVolume postProcessingVolume;
+    private PostProcessingEffects cameraEffects;
 
     private float maxWarpIntensity = 1f; // Maximum warp intensity when sanity is at its lowest
     private float minWarpIntensity = 0f; // Minimum warp intensity when sanity is full
-
-    // TODO: Split this logic out to the camera post processing script and use 
-    // cameraScript = camera.postProcessingScript
-    // and if no post processing script then just dont call camera.postProcessingScript.updateBasedOnIntensity(float intensity)
-    private ChromaticAberration chromaticAberration;
-    private LensDistortion lensDistortion;
 
     void Start()
     {
@@ -27,20 +21,7 @@ public class PlayerSanity : MonoBehaviour
             Debug.LogError("SanityReceiver or camera component is missing on the player.");
         }
 
-        postProcessingVolume = playerCamera.GetComponent<PostProcessVolume>();
-
-        if (postProcessingVolume == null)
-        {
-            Debug.LogError("Need post processing volume on the camera");
-        }
-
-        chromaticAberration = postProcessingVolume.profile.GetSetting<ChromaticAberration>();
-        lensDistortion = postProcessingVolume.profile.GetSetting<LensDistortion>();
-        if (chromaticAberration == null || lensDistortion == null)
-        {
-            Debug.LogError("Need chromatic abberation or lens distortion on the camera");
-        }
-
+        cameraEffects = playerCamera.GetComponent<PostProcessingEffects>();
     }
 
     void Update()
@@ -60,11 +41,11 @@ public class PlayerSanity : MonoBehaviour
 
     private void UpdateCameraWarpEffect(float intensity)
     {
-        // Example implementation for updating the camera warp effect based on intensity
-        Debug.Log($"Updating camera warp effect with intensity: {intensity}");
+        if (cameraEffects == null)
+        {
+            return;
+        }
 
-        // Example: Apply the intensity to a hypothetical post-processing volume or shader effect
-         postProcessingVolume.profile.GetSetting<ChromaticAberration>().intensity.value = intensity;
-         postProcessingVolume.profile.GetSetting<LensDistortion>().intensity.value = intensity * 30f;
+        cameraEffects.UpdateIntensityOfSettings(intensity);
     }
 }
