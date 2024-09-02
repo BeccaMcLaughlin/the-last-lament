@@ -30,7 +30,7 @@ public class InventoryItem : MonoBehaviour
         itemImage.enabled = true; // Enable the icon image
     }
 
-    private void ClearItem()
+    public void ClearItem()
     {
         item = null;
         itemImage.sprite = null; // Clear the child image

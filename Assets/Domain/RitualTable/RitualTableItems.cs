@@ -68,6 +68,7 @@ public class RitualTableItems : MonoBehaviour
             return;
         }
 
+        // TODO: Technically, two items could spawn at the same point which we don't want.
         Transform selectedSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
         GameObject spawnedItem = Instantiate(item.ItemSpawnObject.gameObject, selectedSpawnPoint.position, selectedSpawnPoint.rotation);
 
