@@ -5,8 +5,22 @@ public class RitualTable : MonoBehaviour, IInteractable
 {
     public Transform spawnPoint; // The point on the table where the corpse should be placed
     private Collider detectedCorpse;
+    private RitualTableItems ritualTableItems = null;
 
-    private bool HasCorpseOnTable = false;
+    private void OnEnable()
+    {
+        RitualTableItems.CompleteRitual += CompleteRitual;
+    }
+
+    private void OnDisable()
+    {
+        RitualTableItems.CompleteRitual -= CompleteRitual;
+    }
+
+    private void Start()
+    {
+        ritualTableItems = GetComponent<RitualTableItems>();
+    }
 
     private void Update()
     {
@@ -54,18 +68,21 @@ public class RitualTable : MonoBehaviour, IInteractable
             GameState.HasCorpseOnTable = true;
             GameState.CorpseToPutInsideAlcove = null;
 
-            // Disable corpse physics
-            // TODO: Is this the right place for this logic?
-            detectedCorpse.attachedRigidbody.isKinematic = true;
+            // Begin the game of spawning items to find
+            if (ritualTableItems != null)
+            {
+                ritualTableItems.SelectItemsBasedOnCorruption();
+            }
 
-            // TODO: Move this from a timer over to actual logic when all items are done
-            StartCoroutine(CanRemoveCorpse());
+            // Disable corpse physics
+            detectedCorpse.attachedRigidbody.isKinematic = true;
         }
     }
 
-    private IEnumerator CanRemoveCorpse()
+    private void CompleteRitual()
     {
-        yield return new WaitForSeconds(4f); // In reality this would be the individual items all collected for the ritual
+        Debug.Log("Ritual complrte");
+
         GameState.CorpseToPutInsideAlcove = detectedCorpse.gameObject;
     }
 }

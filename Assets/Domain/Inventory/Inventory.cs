@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.Progress;
@@ -7,9 +8,12 @@ using static UnityEditor.Progress;
 public class Inventory : MonoBehaviour
 {
     public List<InventoryItem> inventoryItems = new List<InventoryItem>();
+    private TextMeshProUGUI inventoryMessage;
 
     void Start()
     {
+        inventoryMessage = transform.Find("InventoryMessage").GetComponent<TextMeshProUGUI>();
+        SetInventoryMessage();
         UpdateSlotHighlight();
     }
 
@@ -20,6 +24,10 @@ public class Inventory : MonoBehaviour
         HandleScrollInput();
 
         // Detect pressing q to drop an item
+        if (Input.GetButton("Drop Item"))
+        {
+            DropItem();
+        }
     }
 
     public bool PickupItem(ScriptedItem item)
@@ -29,6 +37,7 @@ public class Inventory : MonoBehaviour
         if (!selectedInventoryItem.IsOccupied)
         {
             selectedInventoryItem.AssignItem(item);
+            SetInventoryMessage();
             Debug.Log($"Picked up {item.ItemName} and placed it in slot {GameState.SelectedInventoryPanel}");
             return true;
         }
@@ -53,6 +62,30 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < inventoryItems.Count; i++)
         {
             inventoryItems[i].SetPanel(i == GameState.SelectedInventoryPanel);
+            SetInventoryMessage();
         }
+    }
+
+    private void DropItem()
+    {
+        inventoryItems[GameState.SelectedInventoryPanel].DropItem();
+    }
+
+    public void SetInventoryMessage()
+    {
+        InventoryItem currentInventoryItem = inventoryItems[GameState.SelectedInventoryPanel];
+        inventoryMessage.text = currentInventoryItem.item != null ? currentInventoryItem.item.ItemName : "";
+    }
+
+    public void FlashInventoryMessage(string message, float displayTime = 4f)
+    {
+        inventoryMessage.text = message;
+        StartCoroutine(ResetInventoryMessageAfterInterval(displayTime));
+    }
+
+    private IEnumerator ResetInventoryMessageAfterInterval(float displayTime = 4f)
+    {
+        yield return new WaitForSeconds(displayTime);
+        SetInventoryMessage();
     }
 }

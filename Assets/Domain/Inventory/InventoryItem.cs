@@ -5,7 +5,7 @@ public class InventoryItem : MonoBehaviour
 {
     private Image panel;
     private Image itemImage;
-    private ScriptedItem item;
+    public ScriptedItem item;
     private FPSController player;
     public bool IsOccupied => item != null;
 
@@ -13,14 +13,6 @@ public class InventoryItem : MonoBehaviour
     {
         panel = GetComponent<Image>();
         itemImage = transform.Find("Image").GetComponentInChildren<Image>();
-    }
-
-    void Update()
-    {
-        if (Input.GetButton("Drop Item"))
-        {
-            DropItem();
-        }
     }
 
     public void SetPanel(bool isHighlighted)
@@ -38,7 +30,7 @@ public class InventoryItem : MonoBehaviour
         itemImage.enabled = true; // Enable the icon image
     }
 
-    private void ClearItem()
+    public void ClearItem()
     {
         item = null;
         itemImage.sprite = null; // Clear the child image
