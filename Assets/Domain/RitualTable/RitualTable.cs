@@ -7,6 +7,16 @@ public class RitualTable : MonoBehaviour, IInteractable
     private Collider detectedCorpse;
     private RitualTableItems ritualTableItems = null;
 
+    private void OnEnable()
+    {
+        RitualTableItems.CompleteRitual += CompleteRitual;
+    }
+
+    private void OnDisable()
+    {
+        RitualTableItems.CompleteRitual -= CompleteRitual;
+    }
+
     private void Start()
     {
         ritualTableItems = GetComponent<RitualTableItems>();
@@ -65,17 +75,14 @@ public class RitualTable : MonoBehaviour, IInteractable
             }
 
             // Disable corpse physics
-            // TODO: Is this the right place for this logic?
             detectedCorpse.attachedRigidbody.isKinematic = true;
-
-            // TODO: Move this from a timer over to actual logic when all items are done
-            StartCoroutine(CanRemoveCorpse());
         }
     }
 
-    private IEnumerator CanRemoveCorpse()
+    private void CompleteRitual()
     {
-        yield return new WaitForSeconds(4f); // In reality this would be the individual items all collected for the ritual
+        Debug.Log("Ritual complrte");
+
         GameState.CorpseToPutInsideAlcove = detectedCorpse.gameObject;
     }
 }

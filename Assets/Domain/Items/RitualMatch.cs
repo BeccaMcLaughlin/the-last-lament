@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,9 @@ using UnityEngine;
 public class RitualMatch : MonoBehaviour, IInteractable
 {
     public ScriptedItem item;
+    public int ritualIndex = 0;
     private Inventory inventory;
+    public static event Action<int> OnHandleMatch;
 
     private void Start()
     {
@@ -72,6 +75,9 @@ public class RitualMatch : MonoBehaviour, IInteractable
                 yield return null;
             }
         }
+
+        // Send event that this item has been removed to RitualTableItems
+        OnHandleMatch?.Invoke(ritualIndex);
 
         // Finally, remove the object from the scene
         Destroy(gameObject);
