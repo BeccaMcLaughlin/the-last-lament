@@ -20,7 +20,7 @@ public class PostProcessingEffects : MonoBehaviour
 
     void Update()
     {
-        if (lensDistortion != null)
+        if (lensDistortion != null && lensDistortion.intensity.value > 0f)
         {
             // Continuously shift x and y values based on current intensity
             ShiftLensDistortionCenter();
@@ -38,7 +38,7 @@ public class PostProcessingEffects : MonoBehaviour
         // Calculate the shift rate based on the current intensity of lens distortion
         float shiftSpeed = lensDistortion.intensity.value * shiftSpeedMultiplier;
 
-        // Use sine and cosine functions to create smooth oscillation effects for x and y
+        // Use sine and cosine functions to create smooth oscillation effects for x and y (Maffs)
         float xShift = Mathf.Sin(Time.time * shiftSpeed) * maxShiftRange;
         float yShift = Mathf.Cos(Time.time * shiftSpeed) * maxShiftRange;
 
