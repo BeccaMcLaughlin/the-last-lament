@@ -76,7 +76,7 @@ public class FPSController : MonoBehaviour, ISprinting
         if (isSprinting()) {
             return currentSpeed * 2f;
         }
-        
+
         if (isCrouching()) {
             return currentSpeed * 0.5f;
         }
@@ -103,11 +103,13 @@ public class FPSController : MonoBehaviour, ISprinting
         // Constrain the updates here to a single frame
         if (Input.GetButtonDown("Crouch"))
         {
+            GameState.playerIsCrouching = true;
             playerCamera.transform.localPosition = new Vector3(playerCamera.transform.localPosition.x, cameraStandingHeight - 0.5f, playerCamera.transform.localPosition.z);
         }
         // Check if the crouch button is released
         else if (Input.GetButtonUp("Crouch"))
         {
+            GameState.playerIsCrouching = false;
             playerCamera.transform.localPosition = new Vector3(playerCamera.transform.localPosition.x, cameraStandingHeight, playerCamera.transform.localPosition.z);
         }
     }

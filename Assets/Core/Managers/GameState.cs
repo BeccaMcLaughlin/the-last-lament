@@ -27,4 +27,6 @@ public static class GameState
     public static float Corruption = 1f;
 
     public static int SelectedInventoryPanel = 0;
+
+    public static bool playerIsCrouching = false;
 }
