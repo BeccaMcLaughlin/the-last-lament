@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MonsterAggression : MonoBehaviour
 {
@@ -7,10 +10,10 @@ public class MonsterAggression : MonoBehaviour
     public float fieldOfViewAngle = 45f;
     public LayerMask obstaclesLayer;
     public List<Prey> prey = new List<Prey>();
-    public Transform currentlyChasing = null;
+    public Prey currentlyChasing = null;
 
     private NavMeshAgent navMeshAgent;
-    private boolean isChasing = false;
+    private bool isChasing = false;
     private SphereCollider sphereCollider;
 
     void Start()
@@ -18,32 +21,30 @@ public class MonsterAggression : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
 
         // Set up a sphere collider
-        sphereCollider = GameObject.AddComponent<SphereCollider>();
+        sphereCollider = gameObject.AddComponent<SphereCollider>();
         sphereCollider.isTrigger = true;
         sphereCollider.radius = aggressionRange;
     }
 
     void Update()
     {
-        if (prey.)
-        {
-        }
+       
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Prey prey = other.GetComponent<Prey>();
-        if (prey != null && !prey.Contains(prey)) {
-            prey.Add(prey);
+        Prey newPrey = other.GetComponent<Prey>();
+        if (newPrey != null && !prey.Contains(newPrey)) {
+            prey.Add(newPrey);
             CalculateThingToChase();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Prey prey = other.GetComponent<Prey>();
-        if (prey != null && prey.Contains(prey)) {
-            prey.Remove(prey);
+        Prey leavingPrey = other.GetComponent<Prey>();
+        if (prey != null && prey.Contains(leavingPrey)) {
+            prey.Remove(leavingPrey);
             CalculateThingToChase();
         }
     }
