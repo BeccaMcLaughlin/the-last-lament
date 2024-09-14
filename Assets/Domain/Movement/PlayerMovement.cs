@@ -44,8 +44,8 @@ public class PlayerMovement : MonoBehaviour, IMovement
         float z = Input.GetAxis("Vertical");
 
         Vector3 movement = transform.right * x + transform.forward * z;
-        Vector3 move = new Vector3(CurrentSpeed * movement.x, -2f, CurrentSpeed * movement.z);
-        controller.Move(move * Time.deltaTime);
+        Vector3 direction = new Vector3(CurrentSpeed * movement.x, -2f, CurrentSpeed * movement.z);
+        controller.Move(direction * Time.deltaTime);
     }
 
     public bool isSprinting()

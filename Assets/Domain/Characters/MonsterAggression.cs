@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(AIMovement))]
 public class MonsterAggression : MonoBehaviour
 {
     public float aggressionTimeout = 3f;
@@ -11,14 +13,16 @@ public class MonsterAggression : MonoBehaviour
     public LayerMask obstaclesLayer;
     public List<Prey> prey = new List<Prey>();
     public GameObject currentlyChasing = null;
+    public float chasingDelay = 0.2f;
 
-    private NavMeshAgent navMeshAgent;
     private bool isChasing = false;
     private SphereCollider sphereCollider;
+    private AIMovement movement;
+    private float chasingDelayNextTick;
 
     void Start()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        movement = GetComponent<AIMovement>();
 
         // Set up a sphere collider
         sphereCollider = gameObject.AddComponent<SphereCollider>();
@@ -28,7 +32,7 @@ public class MonsterAggression : MonoBehaviour
 
     void Update()
     {
-       
+        ChasePrey();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,7 +47,7 @@ public class MonsterAggression : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         Prey leavingPrey = other.GetComponent<Prey>();
-        if (prey != null && prey.Contains(leavingPrey)) {
+        if (leavingPrey != null && prey.Contains(leavingPrey)) {
             prey.Remove(leavingPrey);
             CalculateThingToChase();
         }
@@ -54,15 +58,27 @@ public class MonsterAggression : MonoBehaviour
         // Calculate a weighted value based on the priority of the prey.
         // For the player this is based on remaining health and distance.
         // Other objects inheriting Prey could use a fixed value.
-        Prey topPriorityPrey = prey.Count > 0 ? prey.OrderBy(p => p.priority).First() : null;
-        currentlyChasing = topPriorityPrey.GetComponent<GameObject>();
+        Prey topPriorityPrey = prey.Count > 0 ? prey.OrderBy(p => p.priority).FirstOrDefault() : null;
+
+        if (topPriorityPrey == null)
+        {
+            currentlyChasing = null;
+            return;
+        }
+
+        currentlyChasing = topPriorityPrey.gameObject;
     }
 
     private void ChasePrey()
     {
         if (!currentlyChasing) return;
-        float distanceToPrey = Vector3.Distance(transform.position, currentlyChasing.transform.position);
+        // float distanceToPrey = Vector3.Distance(transform.position, currentlyChasing.transform.position);
 
-        // Do navmesh and stuff
+        if (Time.time >= chasingDelayNextTick)
+        {
+            chasingDelayNextTick = Time.time + chasingDelay;
+            movement.SetDestination(currentlyChasing.transform.position);
+            movement.Move();
+        }
     }
 }
