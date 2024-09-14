@@ -8,6 +8,13 @@ public class AIMovement : MonoBehaviour, IMovement
     private NavMeshAgent navMeshAgent;
     private Vector3 currentDestination;
 
+    public float velocity
+    {
+        get {
+            return navMeshAgent.desiredVelocity.sqrMagnitude;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {

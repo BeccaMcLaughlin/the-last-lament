@@ -10,19 +10,19 @@ public class MonsterAggression : MonoBehaviour
     public float aggressionTimeout = 3f;
     public float aggressionRange = 5f;
     public float fieldOfViewAngle = 45f;
-    public LayerMask obstaclesLayer;
     public List<Prey> prey = new List<Prey>();
     public GameObject currentlyChasing = null;
-    public float chasingDelay = 0.2f;
+    public Animator animator;
 
-    private bool isChasing = false;
     private SphereCollider sphereCollider;
     private AIMovement movement;
+    private float chasingDelay = 0.2f;
     private float chasingDelayNextTick;
 
     void Start()
     {
         movement = GetComponent<AIMovement>();
+        animator = GetComponent<Animator>();
 
         // Set up a sphere collider
         sphereCollider = gameObject.AddComponent<SphereCollider>();
@@ -33,6 +33,11 @@ public class MonsterAggression : MonoBehaviour
     void Update()
     {
         ChasePrey();
+
+        if (animator != null)
+        {
+            animator.SetFloat("speed", movement.velocity);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
