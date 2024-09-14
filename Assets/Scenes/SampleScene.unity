@@ -855,7 +855,7 @@ Transform:
   m_GameObject: {fileID: 538415519}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.1393094, y: 0.678, z: 1.18}
+  m_LocalPosition: {x: -1.394, y: 0.678, z: 5.448}
   m_LocalScale: {x: 0.41664, y: 0.58892065, z: 0.41664}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -876,11 +876,12 @@ MonoBehaviour:
   aggressionTimeout: 3
   aggressionRange: 5
   fieldOfViewAngle: 45
+  prey: []
+  currentlyChasing: {fileID: 0}
+  animator: {fileID: 0}
   obstaclesLayer:
     serializedVersion: 2
     m_Bits: 0
-  prey: []
-  currentlyChasing: {fileID: 0}
 --- !u!114 &538415526
 MonoBehaviour:
   m_ObjectHideFlags: 0

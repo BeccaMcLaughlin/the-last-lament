@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
         return Input.GetButton("Sprint") && playerController.currentStamina > 0f;
     }
 
-    bool isCrouching()
+    public bool isCrouching()
     {
         return Input.GetButton("Crouch");
     }
