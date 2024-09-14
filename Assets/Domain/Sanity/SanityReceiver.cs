@@ -12,7 +12,6 @@ public class SanityReceiver : MonoBehaviour
     public float currentSanity = 100f;
 
     public static event Action OnSanityReachesZero;
-    public static event Action OnSanityReachesMaximum;
 
     // Update is called once per frame
     void Update()

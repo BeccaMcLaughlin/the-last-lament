@@ -10,7 +10,7 @@ public class MonsterAggression : MonoBehaviour
     public float fieldOfViewAngle = 45f;
     public LayerMask obstaclesLayer;
     public List<Prey> prey = new List<Prey>();
-    public Prey currentlyChasing = null;
+    public GameObject currentlyChasing = null;
 
     private NavMeshAgent navMeshAgent;
     private bool isChasing = false;
@@ -54,13 +54,14 @@ public class MonsterAggression : MonoBehaviour
         // Calculate a weighted value based on the priority of the prey.
         // For the player this is based on remaining health and distance.
         // Other objects inheriting Prey could use a fixed value.
-        currentlyChasing = prey.Count > 0 ? prey.OrderBy(p => p.priority).First() : null;
+        Prey topPriorityPrey = prey.Count > 0 ? prey.OrderBy(p => p.priority).First() : null;
+        currentlyChasing = topPriorityPrey.GetComponent<GameObject>();
     }
 
     private void ChasePrey()
     {
         if (!currentlyChasing) return;
-        float distanceToPrey = Vector3.Distance(transform.position, currentlyChasing.position);
+        float distanceToPrey = Vector3.Distance(transform.position, currentlyChasing.transform.position);
 
         // Do navmesh and stuff
     }

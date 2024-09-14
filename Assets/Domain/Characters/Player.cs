@@ -1,35 +1,30 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.U2D;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController))]
-public class FPSController : MonoBehaviour, ISprinting
+[RequireComponent(typeof(PlayerMovement))]
+public class FPSController : MonoBehaviour
 {
-
     // TODO: Move these to game settings file
     public float mouseSensitivity = 100f;
     public float defaultCameraFOV = 60f;
+    public float currentStamina = 100f;
 
-    private CharacterController controller;
     private Camera playerCamera;
     private Vector3 velocity;
     private float xRotation = 0f;
-    private float speed = 3f;
     private float cameraStandingHeight;
 
     // TODO: Will want to split this out into PlayerStamina once we add monsters
     private float staminaRegenRate = 5f;
     private float maxStamina = 100f;
-    private float currentStamina = 100f;
     private bool staminaIsRegenerating = false;
     private Coroutine staminaRegenCoroutine;
+    private PlayerMovement playerMovement;
 
     void Start()
     {
-        controller = GetComponent<CharacterController>();
         playerCamera = GetComponentInChildren<Camera>();
+        playerMovement = GetComponent<PlayerMovement>();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -39,12 +34,7 @@ public class FPSController : MonoBehaviour, ISprinting
 
     void Update()
     {
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-
-        Vector3 movement = transform.right * x + transform.forward * z;
-        Vector3 move = new Vector3(currentSpeed() * movement.x, -2f, currentSpeed() * movement.z);
-        controller.Move(move * Time.deltaTime);
+        playerMovement.Move();
 
         HandleMouseLook();
         HandleFOVIfSprinting();
@@ -52,36 +42,6 @@ public class FPSController : MonoBehaviour, ISprinting
 
         // TODO: Will want to split this out into PlayerStamina once we add monsters
         HandleStaminaDrainFromSprinting();
-    }
-
-    public bool isSprinting()
-    {
-        return Input.GetButton("Sprint") && currentStamina > 0f;
-    }
-
-    bool isCrouching()
-    {
-        return Input.GetButton("Sprint");
-    }
-
-    public float currentSpeed()
-    {
-        float currentSpeed = speed;
-
-        if (GameState.PlayerIsDraggingCorpse)
-        {
-            currentSpeed = speed / 0.5f;
-        }
-
-        if (isSprinting()) {
-            return currentSpeed * 2f;
-        }
-
-        if (isCrouching()) {
-            return currentSpeed * 0.5f;
-        }
-
-        return currentSpeed;
     }
 
     void HandleMouseLook()
@@ -116,12 +76,12 @@ public class FPSController : MonoBehaviour, ISprinting
 
     void HandleFOVIfSprinting()
     {
-        playerCamera.fieldOfView = isSprinting() ? defaultCameraFOV * 1.1f : defaultCameraFOV;
+        playerCamera.fieldOfView = playerMovement.isSprinting() ? defaultCameraFOV * 1.1f : defaultCameraFOV;
     }
 
     void HandleStaminaDrainFromSprinting()
     {
-        if (isSprinting())
+        if (playerMovement.isSprinting())
         {
             // Cancel stamina regeneration if the player starts sprinting again
             if (staminaRegenCoroutine != null)
