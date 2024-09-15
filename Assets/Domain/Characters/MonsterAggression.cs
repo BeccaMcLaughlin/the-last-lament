@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -29,6 +29,7 @@ public class MonsterAggression : MonoBehaviour
         sphereCollider = gameObject.AddComponent<SphereCollider>();
         sphereCollider.isTrigger = true;
         sphereCollider.radius = aggressionRange;
+        sphereCollider.center = Vector3.zero;
     }
 
     void Update()
@@ -44,7 +45,8 @@ public class MonsterAggression : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Prey newPrey = other.GetComponent<Prey>();
-        if (newPrey != null && !prey.Contains(newPrey)) {
+        if (newPrey != null && !prey.Contains(newPrey))
+        {
             prey.Add(newPrey);
         }
     }
@@ -52,27 +54,27 @@ public class MonsterAggression : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         Prey leavingPrey = other.GetComponent<Prey>();
-        if (leavingPrey != null && prey.Contains(leavingPrey)) {
+        if (leavingPrey != null && prey.Contains(leavingPrey))
+        {
             prey.Remove(leavingPrey);
         }
     }
 
     private void CalculateThingToChase()
     {
-        // Calculate a weighted value based on the priority of the prey.
-        // For the player this is based on remaining health and distance.
-        // Other objects inheriting Prey could use a fixed value.
-        Prey topPriorityPrey = prey.Count > 0 ? prey
-            .Where(p =>
-            {
-                Debug.Log(p.isMakingNoise);
-            return p.isMakingNoise || HasLineOfSight(p.gameObject);
-    })
-            .OrderBy(p => p.priority)
-            .FirstOrDefault() : null;
+        // Check if there are any valid prey in the list
+        if (prey.Count == 0)
+        {
+            currentlyChasing = null;
+            return;
+        }
 
-        // TODO: Add animation where the monster stops and looks towards the new source of sound if topPriorityPrey.gameObject is not equal 
-        // To currentlyChasing.gameObject
+        // Find the highest priority prey that is either making noise or visible
+        Prey topPriorityPrey = prey
+            .Where(p => p.isMakingNoise || HasLineOfSight(p.gameObject))
+            .OrderBy(p => p.priority)
+            .FirstOrDefault();
+        Debug.Log(topPriorityPrey);
 
         if (topPriorityPrey == null)
         {
@@ -80,22 +82,26 @@ public class MonsterAggression : MonoBehaviour
             return;
         }
 
+        // Set the currently chasing prey
         currentlyChasing = topPriorityPrey.gameObject;
     }
 
     private void ChasePrey()
     {
-        // float distanceToPrey = Vector3.Distance(transform.position, currentlyChasing.transform.position);
-
+        // Ensure currentlyChasing is updated correctly before attempting to move
         if (Time.time >= chasingDelayNextTick)
         {
             CalculateThingToChase();
 
+            // If no target is available, stop chasing
             if (!currentlyChasing) return;
 
             chasingDelayNextTick = Time.time + chasingDelay;
+
+            // Set the destination and move if a valid prey is set
             movement.SetDestination(currentlyChasing.transform.position);
             movement.Move();
+            GazeFollowsTarget();
         }
     }
 
@@ -104,11 +110,34 @@ public class MonsterAggression : MonoBehaviour
         Vector3 directionToPrey = (prey.transform.position - transform.position).normalized;
         if (Vector3.Angle(transform.forward, directionToPrey) < fieldOfViewAngle / 2)
         {
-            if (!Physics.Raycast(transform.position, directionToPrey, out RaycastHit hit, aggressionRange, obstaclesLayer))
+            if (Physics.Raycast(transform.position, directionToPrey, out RaycastHit hit, aggressionRange, obstaclesLayer))
             {
-                return true;
+                // Validate that the object hit is indeed the prey and not something else
+                if (hit.collider.gameObject == prey)
+                {
+                    return true;
+                }
             }
         }
         return false;
+    }
+
+    private void GazeFollowsTarget()
+    {
+        if (!currentlyChasing) return;
+        Vector3 direction = currentlyChasing.transform.position - transform.position;
+        direction.y = 0;
+
+        if (direction.magnitude > 0.1f)
+        {
+            Quaternion lookDirection = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookDirection, Time.deltaTime * movement.GetRotationSpeed());
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, aggressionRange);
     }
 }

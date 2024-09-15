@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Corpse
   - Inventory
+  - PatrolPoints
   layers:
   - Default
   - TransparentFX
