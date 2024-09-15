@@ -81,7 +81,11 @@ public class AIMovement : MonoBehaviour, IMovement
 
         // Loop it if doesn't fit
         currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Count;
-        Debug.Log(currentPatrolIndex);
         StartPatrol();
+    }
+
+    public void SetIsPatrolling(bool patrolling)
+    {
+        isPatrolling = patrolling;
     }
 }
