@@ -12,7 +12,7 @@ public class InventoryItem : MonoBehaviour
     void Start()
     {
         panel = GetComponent<Image>();
-        itemImage = transform.Find("Image").GetComponentInChildren<Image>();
+        itemImage = transform.Find("Image")?.GetComponentInChildren<Image>();
     }
 
     public void SetPanel(bool isHighlighted)

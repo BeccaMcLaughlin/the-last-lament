@@ -76,31 +76,26 @@ public class MonsterAggression : MonoBehaviour
     private void EvaluatePrey(Prey prey)
     {
         bool hasLineOfSight = HasLineOfSight(prey.gameObject);
-        Debug.Log("EvaluatePrey");
 
         // Update the last seen and noise times based on current states
         if (hasLineOfSight)
         {
-            Debug.Log("los");
             lastSeenTime = Time.time;
         }
 
         if (!prey.isMakingNoise)
         {
-            Debug.Log("noise");
             noiseStopTime = Time.time;
         }
 
         // Stop chasing if line of sight is lost and noise stops within 0.5 seconds
         if (!hasLineOfSight && Time.time - noiseStopTime <= 0.5f)
         {
-            Debug.Log("Target lost due to no line of sight and no noise.");
             currentlyChasingPrey = null;
             resumePatrolTime = Time.time + Random.Range(0.5f, 5f); // Set random time to resume patrol
         }
         else
         {
-            Debug.Log("noise stop time but no los?");
             currentlyChasingPrey = prey;
             movement.SetIsPatrolling(false); // Stop patrolling when chasing a new or current target
         }
@@ -142,8 +137,6 @@ public class MonsterAggression : MonoBehaviour
             // Adjust the LayerMask to properly detect the prey and obstacles
             if (Physics.Raycast(transform.position, directionToPrey, out RaycastHit hit, aggressionRange, ~obstaclesLayer))
             {
-                Debug.Log("Raycast hit: " + hit.collider.name);
-
                 // Validate that the object hit is indeed the prey and not something else
                 if (hit.collider.gameObject == prey)
                 {

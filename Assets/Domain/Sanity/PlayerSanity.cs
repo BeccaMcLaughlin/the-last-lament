@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
 
 public class PlayerSanity : MonoBehaviour
 {
@@ -9,6 +9,8 @@ public class PlayerSanity : MonoBehaviour
 
     private float maxWarpIntensity = 1f; // Maximum warp intensity when sanity is at its lowest
     private float minWarpIntensity = 0f; // Minimum warp intensity when sanity is full
+
+    public static event Action ShowGameOverScreen;
 
     void Start()
     {
@@ -36,6 +38,11 @@ public class PlayerSanity : MonoBehaviour
 
             // Update the camera warp effect based on the calculated intensity
             UpdateCameraWarpEffect(warpIntensity);
+
+            if (sanityReceiver.isAtMinimumSanity)
+            {
+                ShowGameOverScreen?.Invoke();
+            }
         }
     }
 

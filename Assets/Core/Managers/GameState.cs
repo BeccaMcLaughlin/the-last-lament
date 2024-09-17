@@ -29,4 +29,6 @@ public static class GameState
     public static int SelectedInventoryPanel = 0;
 
     public static bool playerIsCrouching = false;
+
+    public static int mainGameSceneBuildIndex = -1;
 }
