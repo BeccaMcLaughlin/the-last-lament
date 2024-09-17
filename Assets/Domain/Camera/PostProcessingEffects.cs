@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
@@ -7,15 +5,32 @@ public class PostProcessingEffects : MonoBehaviour
 {
     private ChromaticAberration chromaticAberration;
     private LensDistortion lensDistortion;
+    private DepthOfField depthOfField;
 
     private float shiftSpeedMultiplier = 0.05f; // Controls how fast the shift occurs
     private float maxShiftRange = 0.2f; // Maximum range for x and y shifts
+
+    private void OnEnable()
+    {
+        PlayerSanity.ShowGameOverScreen += AddDepthOfFieldBlur;
+    }
+
+    private void OnDisable()
+    {
+        PlayerSanity.ShowGameOverScreen -= AddDepthOfFieldBlur;
+    }
 
     void Start()
     {
         PostProcessVolume postProcessingVolume = GetComponent<PostProcessVolume>();
         chromaticAberration = postProcessingVolume.profile.GetSetting<ChromaticAberration>();
         lensDistortion = postProcessingVolume.profile.GetSetting<LensDistortion>();
+        depthOfField = postProcessingVolume.profile.GetSetting<DepthOfField>();
+
+        if (depthOfField != null)
+        {
+            depthOfField.active = false;
+        }
     }
 
     void Update()
@@ -45,5 +60,13 @@ public class PostProcessingEffects : MonoBehaviour
         // Set the center x and y values to create a shifting effect
         lensDistortion.centerX.value = xShift;
         lensDistortion.centerY.value = yShift;
+    }
+
+    private void AddDepthOfFieldBlur()
+    {
+        if (depthOfField != null)
+        {
+            depthOfField.active = true;
+        }
     }
 }

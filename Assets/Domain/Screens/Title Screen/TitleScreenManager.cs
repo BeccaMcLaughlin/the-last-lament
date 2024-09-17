@@ -6,6 +6,8 @@ public class TitleScreenManager : MonoBehaviour
     // Called when the Start Game button is pressed
     public void StartGame()
     {
+        Time.timeScale = 1f;
+
         // Load the main game scene asynchronously to allow for a loading screen
         SceneManager.LoadSceneAsync("MainGameScene");
     }
@@ -15,6 +17,7 @@ public class TitleScreenManager : MonoBehaviour
     {
         // Activate the options menu or load an options scene
         // You could use SetActive() for a UI panel or load another scene
+        SceneManager.LoadScene("OptionsScreen");
     }
 
     // Called when the Quit button is pressed
