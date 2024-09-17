@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,8 +9,13 @@ public class TitleScreenManager : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-        // Load the main game scene asynchronously to allow for a loading screen
-        SceneManager.LoadSceneAsync("MainGameScene");
+        Debug.Log(GameState.mainGameSceneBuildIndex);
+
+        if (GameState.mainGameSceneBuildIndex == -1)
+        {
+            SceneManager.LoadSceneAsync("MainGameScene");
+        }
+        SceneManager.LoadSceneAsync(GameState.mainGameSceneBuildIndex);
     }
 
     // Called when the Options button is pressed

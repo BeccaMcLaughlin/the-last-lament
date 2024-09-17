@@ -41,7 +41,6 @@ public class PlayerSanity : MonoBehaviour
 
             if (sanityReceiver.isAtMinimumSanity)
             {
-                Debug.Log("min sanity reached");
                 ShowGameOverScreen?.Invoke();
             }
         }

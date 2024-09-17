@@ -29,10 +29,10 @@ public class GameOverScreen : MonoBehaviour
 
     private void ShowGameOverScreen()
     {
+        GameState.mainGameSceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         Time.timeScale = 0f;
         gameOverScreen.SetActive(true);
-        Debug.Log("Oops");
     }
 }
