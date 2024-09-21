@@ -4,8 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMovement))]
 public class FPSController : MonoBehaviour
 {
-    // TODO: Move these to game settings file
-    public float mouseSensitivity = 100f;
     public float defaultCameraFOV = 60f;
     public float currentStamina = 100f;
 
@@ -60,8 +58,8 @@ public class FPSController : MonoBehaviour
         Vector2 lookValue = PlayerActions.Instance.LookValue;
         
         // Get mouse input values for X and Y axes
-        float mouseX = lookValue.x * mouseSensitivity * Time.deltaTime;
-        float mouseY = lookValue.y * mouseSensitivity * Time.deltaTime;
+        float mouseX = lookValue.x * Time.deltaTime;
+        float mouseY = lookValue.y * Time.deltaTime;
 
         // Adjust the vertical rotation and clamp it to prevent looking too far up or down
         xRotation -= mouseY;

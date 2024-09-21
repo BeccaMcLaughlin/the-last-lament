@@ -16,6 +16,8 @@ public class PlayerActions
 
     private readonly InputActions inputActions;
     
+    public float MouseSensitivity { get; set; } = 1.0f;
+    
     public event System.Action OnCrouchPressed;
     public event System.Action OnCrouchReleased;
 
@@ -45,7 +47,7 @@ public class PlayerActions
 
     public bool IsCrouching => inputActions.Gameplay.Crouch.IsPressed();
 
-    public Vector2 LookValue => inputActions.Gameplay.Look.ReadValue<Vector2>();
+    public Vector2 LookValue => inputActions.Gameplay.Look.ReadValue<Vector2>() * MouseSensitivity;
 
     public Vector2 MoveValue => inputActions.Gameplay.Move.ReadValue<Vector2>();
 
