@@ -13,7 +13,7 @@ public class PlayerActions
         }
     }
 
-    private InputActions inputActions;
+    private readonly InputActions inputActions;
 
     // Private constructor
     private PlayerActions()
