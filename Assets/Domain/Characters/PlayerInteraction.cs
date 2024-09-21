@@ -19,7 +19,7 @@ public class PlayerInteraction : MonoBehaviour
         CheckForInteractable();
 
         // Check if the player presses the interaction key
-        if (Input.GetButtonDown("Interact") && currentInteractable != null)
+        if (PlayerActions.Instance.IsInteracting && currentInteractable != null)
         {
             // Trigger the interaction
             currentInteractable.Interact();

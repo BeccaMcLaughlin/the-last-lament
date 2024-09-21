@@ -51,7 +51,7 @@ public class Corpse : MonoBehaviour, IInteractable
     private void Update()
     {
         // Handle stopping drag when the interaction key is released while dragging
-        if (isBeingDragged && Input.GetButtonUp("Interact"))
+        if (isBeingDragged && PlayerActions.Instance.IsInteracting)
         {
             StopDrag();
         }

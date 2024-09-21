@@ -31,6 +31,18 @@ public class FPSController : MonoBehaviour
 
         cameraStandingHeight = playerCamera.transform.localPosition.y;
     }
+    
+    void OnEnable()
+    {
+        PlayerActions.Instance.OnCrouchPressed += HandleCrouchPressed;
+        PlayerActions.Instance.OnCrouchReleased += HandleCrouchReleased;
+    }
+
+    void OnDisable()
+    {
+        PlayerActions.Instance.OnCrouchPressed -= HandleCrouchPressed;
+        PlayerActions.Instance.OnCrouchReleased -= HandleCrouchReleased;
+    }
 
     void Update()
     {
@@ -38,7 +50,6 @@ public class FPSController : MonoBehaviour
 
         HandleMouseLook();
         HandleFOVIfSprinting();
-        HandleCrouch();
 
         // TODO: Will want to split this out into PlayerStamina once we add monsters
         HandleStaminaDrainFromSprinting();
@@ -46,9 +57,11 @@ public class FPSController : MonoBehaviour
 
     void HandleMouseLook()
     {
+        Vector2 lookValue = PlayerActions.Instance.LookValue;
+        
         // Get mouse input values for X and Y axes
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        float mouseX = lookValue.x * mouseSensitivity * Time.deltaTime;
+        float mouseY = lookValue.y * mouseSensitivity * Time.deltaTime;
 
         // Adjust the vertical rotation and clamp it to prevent looking too far up or down
         xRotation -= mouseY;
@@ -58,20 +71,14 @@ public class FPSController : MonoBehaviour
         transform.localRotation = Quaternion.Euler(xRotation, transform.localEulerAngles.y + mouseX, 0f);
     }
 
-    void HandleCrouch()
+    public void HandleCrouchPressed()
     {
-        // Constrain the updates here to a single frame
-        if (Input.GetButtonDown("Crouch"))
-        {
-            GameState.playerIsCrouching = true;
-            playerCamera.transform.localPosition = new Vector3(playerCamera.transform.localPosition.x, cameraStandingHeight - 0.5f, playerCamera.transform.localPosition.z);
-        }
-        // Check if the crouch button is released
-        else if (Input.GetButtonUp("Crouch"))
-        {
-            GameState.playerIsCrouching = false;
-            playerCamera.transform.localPosition = new Vector3(playerCamera.transform.localPosition.x, cameraStandingHeight, playerCamera.transform.localPosition.z);
-        }
+        playerCamera.transform.localPosition = new Vector3(playerCamera.transform.localPosition.x, cameraStandingHeight - 0.5f, playerCamera.transform.localPosition.z);
+    }
+
+    public void HandleCrouchReleased()
+    {
+        playerCamera.transform.localPosition = new Vector3(playerCamera.transform.localPosition.x, cameraStandingHeight, playerCamera.transform.localPosition.z);
     }
 
     void HandleFOVIfSprinting()
@@ -95,7 +102,7 @@ public class FPSController : MonoBehaviour
             currentStamina = Mathf.Clamp(currentStamina - (10f * Time.deltaTime), 0, maxStamina);
         }
         // Regenerate stamina when not sprinting and not at max stamina
-        else if (!Input.GetButton("Sprint") && currentStamina < maxStamina)
+        else if (!playerMovement.isSprinting() && currentStamina < maxStamina)
         {
             // Start the regeneration delay if it's not already in progress
             if (!staminaIsRegenerating && staminaRegenCoroutine == null)

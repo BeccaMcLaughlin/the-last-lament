@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerActions
 {
@@ -14,53 +15,47 @@ public class PlayerActions
     }
 
     private readonly InputActions inputActions;
+    
+    public event System.Action OnCrouchPressed;
+    public event System.Action OnCrouchReleased;
 
     // Private constructor
     private PlayerActions()
     {
         inputActions = new InputActions();
+        
+        inputActions.Gameplay.Crouch.performed += CrouchPerformed;
+        inputActions.Gameplay.Crouch.canceled += CrouchCanceled;
+
         inputActions.Enable();
     }
-
-    public bool IsSprinting()
+    
+    private void CrouchPerformed(InputAction.CallbackContext context)
     {
-        return inputActions.Gameplay.Sprint.IsPressed();
+        OnCrouchPressed?.Invoke();
     }
 
-    public bool IsCrouching()
+    // Callback when crouch is canceled (button released)
+    private void CrouchCanceled(InputAction.CallbackContext context)
     {
-        return inputActions.Gameplay.Crouch.IsPressed();
+        OnCrouchReleased?.Invoke();
     }
 
-    public Vector2 GetLookValue()
-    {
-        return inputActions.Gameplay.Look.ReadValue<Vector2>();
-    }
+    public bool IsSprinting => inputActions.Gameplay.Sprint.IsPressed();
 
-    public Vector2 GetMoveValue()
-    {
-        return inputActions.Gameplay.Move.ReadValue<Vector2>();
-    }
+    public bool IsCrouching => inputActions.Gameplay.Crouch.IsPressed();
 
-    public bool IsInteracting()
-    {
-        return inputActions.Gameplay.Interact.IsPressed();
-    }
+    public Vector2 LookValue => inputActions.Gameplay.Look.ReadValue<Vector2>();
 
-    public bool IsExiting()
-    {
-        return inputActions.Gameplay.Exit.IsPressed();
-    }
+    public Vector2 MoveValue => inputActions.Gameplay.Move.ReadValue<Vector2>();
 
-    public int GetScrollValue()
-    {
-        return inputActions.Gameplay.Scroll.ReadValue<int>();
-    }
+    public bool IsInteracting => inputActions.Gameplay.Interact.IsPressed();
 
-    public bool IsDiscarding()
-    {
-        return inputActions.Gameplay.Discard.IsPressed();
-    }
+    public bool IsExiting => inputActions.Gameplay.Exit.IsPressed();
+
+    public int ScrollValue => inputActions.Gameplay.Scroll.ReadValue<int>();
+
+    public bool IsDiscarding => inputActions.Gameplay.Discard.IsPressed();
 
     public void DisableInputs()
     {

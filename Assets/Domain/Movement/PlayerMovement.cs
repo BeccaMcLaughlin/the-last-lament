@@ -40,8 +40,9 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
     public void Move()
     {
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        Vector2 moveValue = PlayerActions.Instance.MoveValue;
+        float x = moveValue.x;
+        float z = moveValue.y;
 
         Vector3 movement = transform.right * x + transform.forward * z;
         Vector3 direction = new Vector3(CurrentSpeed * movement.x, -2f, CurrentSpeed * movement.z);
@@ -50,11 +51,11 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
     public bool isSprinting()
     {
-        return Input.GetButton("Sprint") && playerController.currentStamina > 0f;
+        return PlayerActions.Instance.IsSprinting && playerController.currentStamina > 0f;
     }
 
     public bool isCrouching()
     {
-        return Input.GetButton("Crouch");
+        return PlayerActions.Instance.IsCrouching;
     }
 }

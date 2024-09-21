@@ -24,7 +24,7 @@ public class Inventory : MonoBehaviour
         HandleScrollInput();
 
         // Detect pressing q to drop an item
-        if (Input.GetButton("Drop Item"))
+        if (PlayerActions.Instance.IsDiscarding)
         {
             DropItem();
         }
@@ -47,10 +47,10 @@ public class Inventory : MonoBehaviour
 
     private void HandleScrollInput()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") != 0f)
+        if (PlayerActions.Instance.ScrollValue != 0)
         {
             // Clamp from 0 to 4 based on direction of scrollwheel
-            int newSelectedSlot = GameState.SelectedInventoryPanel += Input.GetAxis("Mouse ScrollWheel") > 0f ? 1 : -1;
+            int newSelectedSlot = GameState.SelectedInventoryPanel += PlayerActions.Instance.ScrollValue;
             GameState.SelectedInventoryPanel = Mathf.Clamp(newSelectedSlot, 0, inventoryItems.Count - 1);
             UpdateSlotHighlight();
         }
