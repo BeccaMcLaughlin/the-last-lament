@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4f637f78-9fb3-42ca-b159-a8009b0bf089" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.The Last Lament/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.The Last Lament/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/OptionsScreen.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/OptionsScreen.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Domain/InputSystem/PlayerActions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Domain/InputSystem/PlayerActions.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +88,8 @@
       <updated>1726954803275</updated>
       <workItem from="1726954805340" duration="4387000" />
       <workItem from="1727041645259" duration="42000" />
-      <workItem from="1727042257529" duration="32000" />
+      <workItem from="1727042257529" duration="64000" />
+      <workItem from="1727042403700" duration="298000" />
     </task>
     <servers />
   </component>

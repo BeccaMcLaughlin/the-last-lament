@@ -29,7 +29,20 @@ public class PlayerActions
         inputActions.Gameplay.Crouch.performed += CrouchPerformed;
         inputActions.Gameplay.Crouch.canceled += CrouchCanceled;
 
+        LoadAllRebinds();
+        
         inputActions.Enable();
+    }
+    
+    void LoadAllRebinds()
+    {
+        var gameplayMap = inputActions.Gameplay.Get();
+        foreach (var action in gameplayMap.actions)
+        {
+            string rebinds = PlayerPrefs.GetString(action.name + "Rebinds", string.Empty);
+            if (!string.IsNullOrEmpty(rebinds))
+                action.LoadBindingOverridesFromJson(rebinds);
+        }
     }
     
     private void CrouchPerformed(InputAction.CallbackContext context)
