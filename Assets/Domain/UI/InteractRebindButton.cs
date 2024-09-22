@@ -7,6 +7,7 @@ public class InteractRebindButton : MonoBehaviour
 {
     public InputActionReference actionReference;
     public Button rebindButton;
+    public Button resetButton;
     public Text bindingDisplayNameText;
 
     private InputActionRebindingExtensions.RebindingOperation rebindingOperation;
@@ -15,6 +16,7 @@ public class InteractRebindButton : MonoBehaviour
     {
         UpdateBindingDisplay();
         rebindButton.onClick.AddListener(() => StartRebinding());
+        resetButton.onClick.AddListener(() => ResetRebinds());
     }
 
     void UpdateBindingDisplay()
@@ -58,6 +60,13 @@ public class InteractRebindButton : MonoBehaviour
         PlayerPrefs.SetString(actionReference.action.name + "Rebinds", rebinds);
     }
 
+    void ResetRebinds()
+    {
+        actionReference.action.RemoveAllBindingOverrides();
+        PlayerPrefs.DeleteKey(actionReference.action.name + "Rebinds");
+        UpdateBindingDisplay();
+    }
+    
     void LoadRebinds()
     {
         var rebinds = PlayerPrefs.GetString(actionReference.action.name + "Rebinds", string.Empty);

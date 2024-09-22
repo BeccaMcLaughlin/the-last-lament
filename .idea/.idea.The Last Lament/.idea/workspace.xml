@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4f637f78-9fb3-42ca-b159-a8009b0bf089" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.The Last Lament/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.The Last Lament/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Domain/InputSystem/PlayerActions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Domain/InputSystem/PlayerActions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Domain/UI/InteractRebindButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Domain/UI/InteractRebindButton.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/OptionsScreen.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/OptionsScreen.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,8 +18,11 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/011ccacb58784a80ac4b48b4c50ee0b7176400/97/e94d8ab0/PlayerPrefs.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/44baafde34d548b79233aeeb474720f91fe00/fa/7ed26f8a/CharacterController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5a41d6b7189842eca409fd0b1c3e3dcf17bf78/67/9ac5bb16/MethodImplOptions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.7.0/InputSystem/Actions/InputAction.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.7.0/InputSystem/Actions/InputActionRebindingExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Dropdown.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
@@ -89,7 +93,7 @@
       <workItem from="1726954805340" duration="4387000" />
       <workItem from="1727041645259" duration="42000" />
       <workItem from="1727042257529" duration="64000" />
-      <workItem from="1727042403700" duration="298000" />
+      <workItem from="1727042403700" duration="1514000" />
     </task>
     <servers />
   </component>

@@ -216,6 +216,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5982456332517863153, guid: ccc0c5125e46f2c46afdee1944170279, type: 3}
   m_PrefabInstance: {fileID: 5610454362128194954}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &798257165 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5810828823664681593, guid: 4f134943012e4b749b26749e2126b9bd, type: 3}
+  m_PrefabInstance: {fileID: 607904550106042174}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1193306001
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,6 +542,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 777137185}
     m_Modifications:
     - target: {fileID: 2749500291460651551, guid: 4f134943012e4b749b26749e2126b9bd, type: 3}
+      propertyPath: resetButton
+      value: 
+      objectReference: {fileID: 798257165}
+    - target: {fileID: 2749500291460651551, guid: 4f134943012e4b749b26749e2126b9bd, type: 3}
       propertyPath: bindingDisplayNameText
       value: 
       objectReference: {fileID: 51657938}
@@ -619,8 +634,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5810828823664681593, guid: 4f134943012e4b749b26749e2126b9bd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5810828823664681593, guid: 4f134943012e4b749b26749e2126b9bd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6005419878722106717, guid: 4f134943012e4b749b26749e2126b9bd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6005419878722106717, guid: 4f134943012e4b749b26749e2126b9bd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
