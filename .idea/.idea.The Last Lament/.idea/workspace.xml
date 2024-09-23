@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f637f78-9fb3-42ca-b159-a8009b0bf089" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.The Last Lament/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.The Last Lament/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Domain/UI/InteractRebindButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Domain/UI/InteractRebindButton.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/OptionsScreen.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/OptionsScreen.unity" afterDir="false" />
-    </list>
+    <list default="true" id="4f637f78-9fb3-42ca-b159-a8009b0bf089" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -93,7 +89,7 @@
       <workItem from="1726954805340" duration="4387000" />
       <workItem from="1727041645259" duration="42000" />
       <workItem from="1727042257529" duration="64000" />
-      <workItem from="1727042403700" duration="1514000" />
+      <workItem from="1727042403700" duration="1897000" />
     </task>
     <servers />
   </component>
