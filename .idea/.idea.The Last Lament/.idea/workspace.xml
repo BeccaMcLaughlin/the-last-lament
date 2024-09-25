@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4f637f78-9fb3-42ca-b159-a8009b0bf089" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.The Last Lament/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.The Last Lament/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Player/First Person Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/Player/First Person Player.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainGameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainGameScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +93,7 @@
       <workItem from="1727041645259" duration="42000" />
       <workItem from="1727042257529" duration="64000" />
       <workItem from="1727042403700" duration="1897000" />
-      <workItem from="1727292811446" duration="1614000" />
+      <workItem from="1727292811446" duration="2376000" />
     </task>
     <servers />
   </component>
